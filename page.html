@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>هدية لك!</title>
+  <link rel="stylesheet" href="page.css">
+  <style>
+    body { text-align: center; padding: 20px; font-family: sans-serif; }
+    #counter { font-size: 24px; color: #d9534f; margin: 10px; }
+    #image {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      margin: 20px auto;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    } 
+  </style>
+</head>
+<body>
+  <h1>مرحباً بك!</h1>
+  <div id="counter">العدد: 0</div>
+  <img id="image" src="surprise.jpg" alt="هدية!">
+
+  <a href="index.html" title="العودة إلى الصفحة الرئيسية" style="position: fixed; top: 20px; left: 20px; background-color: #333; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 8px rgba(0,0,0,0.3); font-size: 24px; z-index: 1000;">
+  <img src="https://cdn-icons-png.flaticon.com/512/6087/6087042.png" alt="العودة للرئيسية" style="width: 100%; height: 100%; object-fit: contain;">
+</a>
+
+  <script>
+    // اقرأ الاسم من الرابط (اختياري)
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    if (name) document.querySelector('h1').innerText = `مرحباً، ${name}!`;
+
+    // استخدم localStorage لحفظ العداد (محلي فقط)
+    let count = localStorage.getItem('clickCount') || 0;
+    document.getElementById('counter').innerText = `العدد: ${count}`;
+
+    const img = document.getElementById('image');
+    img.onclick = () => {
+      // زد العداد
+      count++;
+      localStorage.setItem('clickCount', count);
+      document.getElementById('counter').innerText = `العدد: ${count}`;
+
+      // اهتزاز الصورة
+      img.classList.add('shake');
+      setTimeout(() => img.classList.remove('shake'), 500);
+    };
+  </script>
+</body>
+</html> 
